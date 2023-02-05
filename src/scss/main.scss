@@ -1,0 +1,116 @@
+// Reset for CSS
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  background-color: black;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+   scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+// Start of the CSS for the styling -- Start of the CSS for the styling
+
+.dashboardContainer {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
+    .headingContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 2em 1em;
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+        }
+    }
+    .getDataDiv {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 2em;
+        button {
+            background-color: white;
+            padding: 0.2em 2rem;
+            color: black;
+            border-radius: 15px;
+            margin: 0 auto;
+        }
+    }
+    .chartSection {
+        padding: 2em 1em;
+        display: flex;
+        justify-content: center;
+    }
+}
