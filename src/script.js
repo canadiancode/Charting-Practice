@@ -118,14 +118,26 @@ const displayedChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: [chartTimeframe],
-      datasets: [{
+      datasets: [
+        {
         data: [chartPrice],
         label: `Price of ${selectedAsset}`,
         borderWidth: 1,
         pointRadius: 0
-      }]
+        }
+      ]
     },
-    options: {}
+    options: {
+        scales: {
+            y: {
+                ticks: {
+                    callback: function(value, index, ticks) {
+                        return '$' + value;
+                    }
+                }
+            }
+        }
+    }
   });
 
 // event listener for keeping canvas proper size

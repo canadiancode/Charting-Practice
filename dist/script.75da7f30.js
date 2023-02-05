@@ -340,7 +340,17 @@ var displayedChart = new Chart(ctx, {
       pointRadius: 0
     }]
   },
-  options: {}
+  options: {
+    scales: {
+      y: {
+        ticks: {
+          callback: function callback(value, index, ticks) {
+            return '$' + value;
+          }
+        }
+      }
+    }
+  }
 });
 
 // event listener for keeping canvas proper size
