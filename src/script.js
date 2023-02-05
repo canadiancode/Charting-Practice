@@ -57,9 +57,8 @@ async function fetchData() {
 fetchData();
 
 // GENERATE LIST OF ASSETS
-const assetListURL = 'https://api.coingecko.com/api/v3/coins/list';
+const assetListURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
 const assetListEl = document.querySelector('.assetList');
-const assetList = [];
 
 async function getAssetList() {
     try {
@@ -67,12 +66,14 @@ async function getAssetList() {
         let response = await fetch(assetListURL);
         let assetListData = await response.json();
 
+        console.log(assetListData);
+
         for (const asset of assetListData) {
-            let assetIDs = await asset.id;
+            let assetName = await asset.name;
             const listOptions = document.createElement('option');
             listOptions.classList.add('asset');
-            listOptions.value = await assetIDs;
-            listOptions.appendChild(document.createTextNode(assetIDs));
+            listOptions.value = await assetName;
+            listOptions.appendChild(document.createTextNode(assetName));
             assetListEl.appendChild(listOptions);
         }
     }

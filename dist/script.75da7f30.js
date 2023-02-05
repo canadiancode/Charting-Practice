@@ -226,15 +226,14 @@ function _fetchData() {
 fetchData();
 
 // GENERATE LIST OF ASSETS
-var assetListURL = 'https://api.coingecko.com/api/v3/coins/list';
+var assetListURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
 var assetListEl = document.querySelector('.assetList');
-var assetList = [];
 function getAssetList() {
   return _getAssetList.apply(this, arguments);
 }
 function _getAssetList() {
   _getAssetList = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var response, assetListData, _iterator2, _step2, asset, assetIDs, listOptions;
+    var response, assetListData, _iterator2, _step2, asset, assetName, listOptions;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -247,54 +246,55 @@ function _getAssetList() {
           return response.json();
         case 6:
           assetListData = _context2.sent;
+          console.log(assetListData);
           _iterator2 = _createForOfIteratorHelper(assetListData);
-          _context2.prev = 8;
+          _context2.prev = 9;
           _iterator2.s();
-        case 10:
+        case 11:
           if ((_step2 = _iterator2.n()).done) {
-            _context2.next = 24;
+            _context2.next = 25;
             break;
           }
           asset = _step2.value;
-          _context2.next = 14;
-          return asset.id;
-        case 14:
-          assetIDs = _context2.sent;
+          _context2.next = 15;
+          return asset.name;
+        case 15:
+          assetName = _context2.sent;
           listOptions = document.createElement('option');
           listOptions.classList.add('asset');
-          _context2.next = 19;
-          return assetIDs;
-        case 19:
+          _context2.next = 20;
+          return assetName;
+        case 20:
           listOptions.value = _context2.sent;
-          listOptions.appendChild(document.createTextNode(assetIDs));
+          listOptions.appendChild(document.createTextNode(assetName));
           assetListEl.appendChild(listOptions);
-        case 22:
-          _context2.next = 10;
+        case 23:
+          _context2.next = 11;
           break;
-        case 24:
-          _context2.next = 29;
+        case 25:
+          _context2.next = 30;
           break;
-        case 26:
-          _context2.prev = 26;
-          _context2.t0 = _context2["catch"](8);
+        case 27:
+          _context2.prev = 27;
+          _context2.t0 = _context2["catch"](9);
           _iterator2.e(_context2.t0);
-        case 29:
-          _context2.prev = 29;
+        case 30:
+          _context2.prev = 30;
           _iterator2.f();
-          return _context2.finish(29);
-        case 32:
-          _context2.next = 38;
+          return _context2.finish(30);
+        case 33:
+          _context2.next = 39;
           break;
-        case 34:
-          _context2.prev = 34;
+        case 35:
+          _context2.prev = 35;
           _context2.t1 = _context2["catch"](0);
           console.log(_context2.t1);
           console.log('cannot get list of assets from CoinGecko...');
-        case 38:
+        case 39:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 34], [8, 26, 29, 32]]);
+    }, _callee2, null, [[0, 35], [9, 27, 30, 33]]);
   }));
   return _getAssetList.apply(this, arguments);
 }
