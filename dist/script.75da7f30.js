@@ -233,7 +233,7 @@ function getAssetList() {
 }
 function _getAssetList() {
   _getAssetList = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var response, assetListData, _iterator2, _step2, asset, assetName, listOptions;
+    var response, assetListData, _iterator2, _step2, asset, assetID, listOptions, assetName;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -246,55 +246,61 @@ function _getAssetList() {
           return response.json();
         case 6:
           assetListData = _context2.sent;
-          console.log(assetListData);
           _iterator2 = _createForOfIteratorHelper(assetListData);
-          _context2.prev = 9;
+          _context2.prev = 8;
           _iterator2.s();
-        case 11:
+        case 10:
           if ((_step2 = _iterator2.n()).done) {
-            _context2.next = 25;
+            _context2.next = 27;
             break;
           }
           asset = _step2.value;
-          _context2.next = 15;
-          return asset.name;
-        case 15:
-          assetName = _context2.sent;
+          _context2.next = 14;
+          return asset.id;
+        case 14:
+          assetID = _context2.sent;
           listOptions = document.createElement('option');
-          listOptions.classList.add('asset');
-          _context2.next = 20;
+          listOptions.classList.add(assetID);
+
+          // for the display name
+          _context2.next = 19;
+          return asset.name;
+        case 19:
+          assetName = _context2.sent;
+          _context2.next = 22;
           return assetName;
-        case 20:
+        case 22:
           listOptions.value = _context2.sent;
+          // add option onto the dropdown selection
           listOptions.appendChild(document.createTextNode(assetName));
           assetListEl.appendChild(listOptions);
-        case 23:
-          _context2.next = 11;
-          break;
         case 25:
-          _context2.next = 30;
+          _context2.next = 10;
           break;
         case 27:
-          _context2.prev = 27;
-          _context2.t0 = _context2["catch"](9);
-          _iterator2.e(_context2.t0);
-        case 30:
-          _context2.prev = 30;
-          _iterator2.f();
-          return _context2.finish(30);
-        case 33:
-          _context2.next = 39;
+          _context2.next = 32;
           break;
+        case 29:
+          _context2.prev = 29;
+          _context2.t0 = _context2["catch"](8);
+          _iterator2.e(_context2.t0);
+        case 32:
+          _context2.prev = 32;
+          _iterator2.f();
+          return _context2.finish(32);
         case 35:
-          _context2.prev = 35;
+          _context2.next = 41;
+          break;
+        case 37:
+          _context2.prev = 37;
           _context2.t1 = _context2["catch"](0);
           console.log(_context2.t1);
           console.log('cannot get list of assets from CoinGecko...');
-        case 39:
+        case 41:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 35], [9, 27, 30, 33]]);
+    }, _callee2, null, [[0, 37], [8, 29, 32, 35]]);
   }));
   return _getAssetList.apply(this, arguments);
 }
@@ -303,7 +309,9 @@ getAssetList();
 // change the asset on the chart
 function changeAsset() {
   var assetList = document.querySelector('.assetList');
-  selectedAsset = assetList.value;
+  var selectedEl = assetList.options[assetList.selectedIndex];
+  var ID = selectedEl.classList[0];
+  selectedAsset = ID;
   fetchData();
 }
 ;
@@ -333,6 +341,12 @@ var displayedChart = new Chart(ctx, {
   },
   options: {}
 });
+
+// event listener for keeping canvas proper size
+onresize = function onresize() {
+  ctx.style.width = '100%';
+  ctx.style.height = '100%';
+};
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

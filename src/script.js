@@ -66,13 +66,19 @@ async function getAssetList() {
         let response = await fetch(assetListURL);
         let assetListData = await response.json();
 
-        console.log(assetListData);
-
         for (const asset of assetListData) {
-            let assetName = await asset.name;
+
+            // for the ID 
+            let assetID = await asset.id;
             const listOptions = document.createElement('option');
-            listOptions.classList.add('asset');
+            listOptions.classList.add(assetID);
+
+            
+            // for the display name
+            let assetName = await asset.name;
             listOptions.value = await assetName;
+
+            // add option onto the dropdown selection
             listOptions.appendChild(document.createTextNode(assetName));
             assetListEl.appendChild(listOptions);
         }
@@ -87,7 +93,9 @@ getAssetList();
 // change the asset on the chart
 function changeAsset() {
     const assetList = document.querySelector('.assetList');
-    selectedAsset = assetList.value;
+    let selectedEl = assetList.options[assetList.selectedIndex];
+    let ID = selectedEl.classList[0];
+    selectedAsset = ID;
     fetchData();
 };
 assetListEl.addEventListener('change', changeAsset);
@@ -119,3 +127,9 @@ const displayedChart = new Chart(ctx, {
     },
     options: {}
   });
+
+// event listener for keeping canvas proper size
+onresize = () => {
+    ctx.style.width = '100%';
+    ctx.style.height = '100%';
+}

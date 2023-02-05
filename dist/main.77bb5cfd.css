@@ -114,6 +114,10 @@ select {
   padding: 2em 1em;
   display: flex;
   justify-content: center;
+  margin: 0 auto;
+}
+.dashboardContainer .chartSection .chart {
+  max-width: 1000px;
 }
 
 /*# sourceMappingURL=/main.77bb5cfd.css.map */
