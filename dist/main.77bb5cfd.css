@@ -89,19 +89,26 @@ select {
   text-align: center;
   font-size: 2rem;
 }
-.dashboardContainer .getDataDiv {
+.dashboardContainer .selectionDiv {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+.dashboardContainer .selectionDiv .assetSelectionDiv {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
-  padding: 2em;
 }
-.dashboardContainer .getDataDiv button {
-  background-color: white;
-  padding: 0.2em 2rem;
-  color: black;
-  border-radius: 15px;
-  margin: 0 auto;
+.dashboardContainer .selectionDiv .assetSelectionDiv .assetList {
+  max-width: 200px;
+}
+.dashboardContainer .selectionDiv .timeframeSelectionDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
 }
 .dashboardContainer .chartSection {
   padding: 2em 1em;

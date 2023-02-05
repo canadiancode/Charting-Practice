@@ -17,15 +17,34 @@
 <body>
 
     <section class="dashboardContainer">
-    
+        
+        <!-- Title of the page -->
         <div class="headingContainer">
             <h1>Charting Practice</h1>
         </div>
 
-        <div class="getDataDiv">
-            <button class="getDataButton">Get Data</button>
+        <!-- Button to select displayed asset -->
+        <div class="selectionDiv">
+            <div class="assetSelectionDiv">
+                <select class="assetList">
+                    <!-- List of assets are going within this select list -->
+                    <option class="asset bitcoin" value="bitcoin">Bitcoin</option>
+                </select>
+            </div>
+            <div class="timeframeSelectionDiv">
+                <select class="timeframeList">
+                    <option value="1460" class="timeframe year">4-Year</option>
+                    <option value="1095" class="timeframe year">3-Year</option>
+                    <option value="730" class="timeframe year">2-Year</option>
+                    <option value="365" selected="" class="timeframe year">Year</option>
+                    <option value="120" class="timeframe onequarter">Quarter</option>
+                    <option value="30" class="timeframe onequarter">Month</option>
+                    <option value="7" class="timeframe onequarter">Week</option>
+                </select>
+            </div>
         </div>
 
+        <!-- The chart -->
         <section class="chartSection">
             <canvas class="chart">
 
