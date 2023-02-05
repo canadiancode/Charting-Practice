@@ -132,6 +132,7 @@ var chartPrice = [];
 
 // variables for the data
 var selectedAsset = 'bitcoin';
+var selectedAssetName = 'Bitcoin';
 var selectedTimePeriod = '365';
 
 // GET THE PRICE AND TIME OF ASSET
@@ -202,7 +203,7 @@ function _fetchData() {
           displayedChart.data.labels = chartTimeframe;
           displayedChart.data.datasets.forEach(function (dataset) {
             dataset.data = chartPrice;
-            dataset.label = "Price of ".concat(selectedAsset);
+            dataset.label = "Price of ".concat(selectedAssetName);
           });
           displayedChart.update();
           _context.next = 45;
@@ -310,8 +311,8 @@ function changeAsset() {
   var selectedEl = assetList.options[assetList.selectedIndex];
   var ID = selectedEl.classList[0];
   selectedAsset = ID;
+  selectedAssetName = assetList.value;
   fetchData();
-  console.log(chartPrice);
 }
 ;
 assetListEl.addEventListener('change', changeAsset);

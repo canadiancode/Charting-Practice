@@ -6,6 +6,7 @@ let chartPrice = [];
 
 // variables for the data
 let selectedAsset = 'bitcoin';
+let selectedAssetName = 'Bitcoin';
 let selectedTimePeriod = '365';
 
     // GET THE PRICE AND TIME OF ASSET
@@ -26,7 +27,7 @@ async function fetchData() {
 
         // extraction of the desired data from dataset (time and price)
         // use this instead of forEach for normal for loop for async await
-        for (const price of prices) {  
+        for (const price of prices) {
             // change from Epoch time format to UTC
             let epochTimeframe = await price[0];
             let formattedDate = new Date(epochTimeframe);
@@ -42,7 +43,7 @@ async function fetchData() {
         displayedChart.data.labels = chartTimeframe;
         displayedChart.data.datasets.forEach(dataset => {
             dataset.data = chartPrice;
-            dataset.label = `Price of ${selectedAsset}`;
+            dataset.label = `Price of ${selectedAssetName}`;
         });
         displayedChart.update();
     }
@@ -93,10 +94,8 @@ function changeAsset() {
     let selectedEl = assetList.options[assetList.selectedIndex];
     let ID = selectedEl.classList[0];
     selectedAsset = ID;
+    selectedAssetName = assetList.value;
     fetchData();
-
-    console.log(chartPrice);
-
 };
 assetListEl.addEventListener('change', changeAsset);
 
