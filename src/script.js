@@ -94,7 +94,6 @@ function changeAsset() {
     let selectedEl = assetList.options[assetList.selectedIndex];
     let ID = selectedEl.classList[0];
     selectedAsset = ID;
-    console.log(assetList.value);
     selectedAssetName = assetList.value;
     fetchData();
 };
