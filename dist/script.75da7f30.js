@@ -125,8 +125,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-// Bitcoin data from an API
-
+// FETCHING AND UPDATING THE CHART
 // arrays for the price and timeframe
 var chartTimeframe = [];
 var chartPrice = [];
@@ -141,7 +140,7 @@ function fetchData() {
 }
 function _fetchData() {
   _fetchData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var URL, response, data, prices, _iterator, _step, price, epochTimeframe, roundedprice, formattedDate, longTimeframe, timeframe;
+    var URL, response, data, prices, _iterator, _step, price, epochTimeframe, formattedDate, longTimeframe, timeframe;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -171,7 +170,7 @@ function _fetchData() {
           _iterator.s();
         case 16:
           if ((_step = _iterator.n()).done) {
-            _context.next = 29;
+            _context.next = 28;
             break;
           }
           price = _step.value;
@@ -179,27 +178,26 @@ function _fetchData() {
           return price[0];
         case 20:
           epochTimeframe = _context.sent;
-          roundedprice = Math.round(price[1]); // change from Epoch time format to UTC
           formattedDate = new Date(epochTimeframe);
           longTimeframe = formattedDate.toUTCString();
           timeframe = longTimeframe.substring(4, 16); // add data to arrays
           chartTimeframe.push(timeframe);
-          chartPrice.push(roundedprice);
-        case 27:
+          chartPrice.push(price[1]);
+        case 26:
           _context.next = 16;
           break;
-        case 29:
-          _context.next = 34;
+        case 28:
+          _context.next = 33;
           break;
-        case 31:
-          _context.prev = 31;
+        case 30:
+          _context.prev = 30;
           _context.t0 = _context["catch"](14);
           _iterator.e(_context.t0);
-        case 34:
-          _context.prev = 34;
+        case 33:
+          _context.prev = 33;
           _iterator.f();
-          return _context.finish(34);
-        case 37:
+          return _context.finish(33);
+        case 36:
           // update the chart with new data
           displayedChart.data.labels = chartTimeframe;
           displayedChart.data.datasets.forEach(function (dataset) {
@@ -207,18 +205,18 @@ function _fetchData() {
             dataset.label = "Price of ".concat(selectedAsset);
           });
           displayedChart.update();
-          _context.next = 46;
+          _context.next = 45;
           break;
-        case 42:
-          _context.prev = 42;
+        case 41:
+          _context.prev = 41;
           _context.t1 = _context["catch"](0);
           console.log('cannot get data from coingecko...');
           console.log(_context.t1);
-        case 46:
+        case 45:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 42], [14, 31, 34, 37]]);
+    }, _callee, null, [[0, 41], [14, 30, 33, 36]]);
   }));
   return _fetchData.apply(this, arguments);
 }
@@ -306,18 +304,19 @@ function _getAssetList() {
 }
 getAssetList();
 
-// change the asset on the chart
+// CHANGE THE ASSSET ON THE CHART
 function changeAsset() {
   var assetList = document.querySelector('.assetList');
   var selectedEl = assetList.options[assetList.selectedIndex];
   var ID = selectedEl.classList[0];
   selectedAsset = ID;
   fetchData();
+  console.log(chartPrice);
 }
 ;
 assetListEl.addEventListener('change', changeAsset);
 
-// change the timeframe on the chart
+// CHANGE THE TIME PERIOD ON THE CHART
 var selectedTimePeriodEl = document.querySelector('.timeframeList');
 function changeTimeframe() {
   var timeframeList = document.querySelector('.timeframeList');
@@ -326,7 +325,7 @@ function changeTimeframe() {
 }
 selectedTimePeriodEl.addEventListener('change', changeTimeframe);
 
-// Code for the charting librarby ChartJS
+// CODE FOR THE CHART.JS LIBRARY
 var ctx = document.querySelector('.chart');
 var displayedChart = new Chart(ctx, {
   type: 'line',
@@ -372,7 +371,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56184" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52427" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

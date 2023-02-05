@@ -1,5 +1,5 @@
-    // Bitcoin data from an API
 
+    // FETCHING AND UPDATING THE CHART
 // arrays for the price and timeframe
 let chartTimeframe = [];
 let chartPrice = [];
@@ -8,7 +8,7 @@ let chartPrice = [];
 let selectedAsset = 'bitcoin';
 let selectedTimePeriod = '365';
 
-// GET THE PRICE AND TIME OF ASSET
+    // GET THE PRICE AND TIME OF ASSET
 async function fetchData() {
 
     try {
@@ -26,19 +26,16 @@ async function fetchData() {
 
         // extraction of the desired data from dataset (time and price)
         // use this instead of forEach for normal for loop for async await
-        for (const price of prices) {
-            // extract price and time values
-            let epochTimeframe = await price[0];
-            let roundedprice = Math.round(price[1]);
-
+        for (const price of prices) {  
             // change from Epoch time format to UTC
+            let epochTimeframe = await price[0];
             let formattedDate = new Date(epochTimeframe);
             let longTimeframe = formattedDate.toUTCString();
             let timeframe = longTimeframe.substring(4, 16);        
 
             // add data to arrays
             chartTimeframe.push(timeframe);
-            chartPrice.push(roundedprice);
+            chartPrice.push(price[1]);
         }
 
         // update the chart with new data
@@ -56,7 +53,7 @@ async function fetchData() {
 };
 fetchData();
 
-// GENERATE LIST OF ASSETS
+    // GENERATE LIST OF ASSETS
 const assetListURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
 const assetListEl = document.querySelector('.assetList');
 
@@ -90,18 +87,21 @@ async function getAssetList() {
 }
 getAssetList();
 
-// change the asset on the chart
+    // CHANGE THE ASSSET ON THE CHART
 function changeAsset() {
     const assetList = document.querySelector('.assetList');
     let selectedEl = assetList.options[assetList.selectedIndex];
     let ID = selectedEl.classList[0];
     selectedAsset = ID;
     fetchData();
+
+    console.log(chartPrice);
+
 };
 assetListEl.addEventListener('change', changeAsset);
 
 
-// change the timeframe on the chart
+    // CHANGE THE TIME PERIOD ON THE CHART
 const selectedTimePeriodEl = document.querySelector('.timeframeList');
 function changeTimeframe() {
     const timeframeList = document.querySelector('.timeframeList');
@@ -111,7 +111,7 @@ function changeTimeframe() {
 selectedTimePeriodEl.addEventListener('change', changeTimeframe);
 
 
-    // Code for the charting librarby ChartJS
+    // CODE FOR THE CHART.JS LIBRARY
 const ctx = document.querySelector('.chart');
 
 const displayedChart = new Chart(ctx, {
