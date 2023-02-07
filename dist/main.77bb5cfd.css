@@ -95,6 +95,12 @@ select {
   width: 100%;
   margin: 0 auto;
 }
+@media screen and (max-width: 500px) {
+  .dashboardContainer .selectionDiv {
+    flex-direction: column;
+    gap: 1em;
+  }
+}
 .dashboardContainer .selectionDiv label {
   color: white;
 }
@@ -122,6 +128,72 @@ select {
 .dashboardContainer .selectionDiv .timeframeSelectionDiv .timeframeList {
   max-width: 150px;
 }
+.dashboardContainer .selectedList {
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+.dashboardContainer .selectedList .chartTypeSelection {
+  padding: 10px;
+}
+.dashboardContainer .selectedList .chartTypeSelection .chartTypeList {
+  align-self: center;
+  min-width: 100px;
+}
+.dashboardContainer .selectedList .selectedAssetList {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+  gap: 12px;
+  max-width: 1000px;
+  padding: 7px;
+  padding-bottom: 15px;
+  align-self: center;
+}
+.dashboardContainer .selectedList .selectedAssetList .assetContainer {
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(128, 128, 128, 0.4);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.dashboardContainer .selectedList .selectedAssetList .assetContainer .removeAsset {
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.dashboardContainer .selectedList .selectedAssetList .assetContainer .selectedAssetName {
+  color: white;
+  padding: 2px 5px;
+  align-self: center;
+}
+.dashboardContainer .addNewLayerDiv {
+  width: 100%;
+  padding-left: 2em;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+.dashboardContainer .addNewLayerDiv .newLayerButtonDiv {
+  display: flex;
+  justify-content: flex-start;
+  max-width: 1000px;
+  width: 100%;
+}
+.dashboardContainer .addNewLayerDiv .newLayerButtonDiv .addNewLayerEl {
+  color: white;
+  background: none;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 0em 0.7rem;
+  cursor: pointer;
+}
 .dashboardContainer .chartSection {
   padding: 2em 1em;
   display: flex;
@@ -130,6 +202,27 @@ select {
 }
 .dashboardContainer .chartSection .chart {
   max-width: 1000px;
+}
+.dashboardContainer .chartOptions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0em 1em;
+}
+.dashboardContainer .chartOptions .logOptionDiv .chartLogAutoButton {
+  padding: 0em 15px;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.dashboardContainer .chartOptions .logOptionDiv .autoChartOption {
+  background-color: rgba(128, 128, 128, 0.6);
+}
+.dashboardContainer .chartOptions .logOptionDiv .logChartOption {
+  background-color: rgba(128, 128, 128, 0.2);
 }
 
 /*# sourceMappingURL=/main.77bb5cfd.css.map */

@@ -79,61 +79,154 @@ select {
 // Start of the CSS for the styling -- Start of the CSS for the styling
 
 .dashboardContainer {
-    min-height: 100vh;
-    width: 100%;
-    background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
-    .headingContainer {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        padding: 2em 1em;
-        h1 {
-            color: white;
-            text-align: center;
-            font-size: 2rem;
-        }
-    }
-    .selectionDiv {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        margin: 0 auto;
-        label {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
+  .headingContainer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding: 2em 1em;
+      h1 {
           color: white;
-        }
-        .assetSelectionDiv {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            .assetList {
-                max-width: 200px;
+          text-align: center;
+          font-size: 2rem;
+      }
+  }
+  .selectionDiv {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin: 0 auto;
+      @media screen and (max-width: 500px) {
+        flex-direction: column;
+        gap: 1em;
+      }
+      label {
+        color: white;
+      }
+      .assetSelectionDiv {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          gap: 0.5rem;
+          .assetList {
+              max-width: 200px;
+          }
+      }
+      .timeframeSelectionDiv {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          color: white;
+          list-style: none;
+          display: flex;
+          flex-direction: row;
+          gap: 0.5rem;
+            .timeframeList {
+              max-width: 150px;
             }
-        }
-        .timeframeSelectionDiv {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            color: white;
-            list-style: none;
-            display: flex;
-            flex-direction: row;
-            gap: 0.5rem;
-              .timeframeList {
-                max-width: 150px;
-              }
-        }
+      }
+  }
+  .selectedList {
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    .chartTypeSelection {
+      padding: 10px;
+      .chartTypeList {
+        align-self: center;
+        min-width: 100px;
+      }
     }
-    .chartSection {
-        padding: 2em 1em;
+    .selectedAssetList {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      overflow: scroll;
+      gap: 12px;
+      max-width: 1000px;
+      padding: 7px;
+      padding-bottom: 15px;
+      align-self: center;
+      .assetContainer {
         display: flex;
-        justify-content: center;
-        margin: 0 auto;
-        .chart {
-          max-width: 1000px;
+        flex-direction: row;
+        background-color: rgb(128, 128, 128, 0.4);
+        border-radius: 2px;
+        flex-shrink: 0;
+        .removeAsset {
+          background: none;
+          color: white;
+          border: none;
+          cursor: pointer;
+        } 
+        .selectedAssetName {
+          color: white;
+          padding: 2px 5px;
+          align-self: center;
         }
+      }
     }
+  }
+  .addNewLayerDiv {
+    width: 100%;
+    padding-left: 2em;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    .newLayerButtonDiv {
+      display: flex;
+      justify-content: flex-start;
+      max-width: 1000px;
+      width: 100%;
+      .addNewLayerEl {
+        color: white;
+        background: none;
+        border: 1px solid white;
+        border-radius: 10px;
+        padding: 0em 0.7rem;
+        cursor: pointer;
+      }
+    }
+  }
+  .chartSection {
+      padding: 2em 1em;
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+      .chart {
+        max-width: 1000px;
+      }
+  }
+  .chartOptions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 0em 1em;
+    .logOptionDiv {
+      .chartLogAutoButton {
+        padding: 0em 15px;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.5s; 
+      }
+      .autoChartOption {
+        background-color: rgb(128, 128, 128, 0.6);
+      }
+      .logChartOption {
+        background-color: rgb(128, 128, 128, 0.2);
+      }
+    }
+  }
 }

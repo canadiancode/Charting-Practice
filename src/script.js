@@ -90,11 +90,28 @@ getAssetList();
 
     // CHANGE THE ASSSET ON THE CHART
 function changeAsset() {
+    // change the data on the chart
     const assetList = document.querySelector('.assetList');
     let selectedEl = assetList.options[assetList.selectedIndex];
     let ID = selectedEl.classList[0];
     selectedAsset = ID;
     selectedAssetName = assetList.value;
+    
+    // adding the tab on the selected list
+    const selectedAssetListEl = document.querySelector('.selectedAssetList');
+    const addedAsset = document.createElement('div');
+    addedAsset.classList.add('assetContainer');
+    const removeButtonEl = document.createElement('button');
+    removeButtonEl.appendChild(document.createTextNode('✖'));
+    removeButtonEl.classList.add('removeAsset');
+    addedAsset.appendChild(removeButtonEl);
+    const buttonTextEl = document.createElement('p');
+    buttonTextEl.classList.add('selectedAssetName');
+    buttonTextEl.appendChild(document.createTextNode(selectedAssetName));
+    addedAsset.appendChild(buttonTextEl);
+    selectedAssetListEl.appendChild(addedAsset);
+
+    // update the chart
     fetchData();
 };
 assetListEl.addEventListener('change', changeAsset);
@@ -108,6 +125,40 @@ function changeTimeframe() {
     fetchData();
 }
 selectedTimePeriodEl.addEventListener('change', changeTimeframe);
+
+    // CODE FOR CHANGING THE CHART SCALE
+let chartScale = 'linear'; //logarithmic or linear
+const autoChartOption = document.querySelector('.autoChartOption');
+autoChartOption.addEventListener('click', changeChartScale)
+const logChartOption = document.querySelector('.logChartOption');
+logChartOption.addEventListener('click', changeChartScale);
+function changeChartScale(event) {
+
+    if (event.target.classList.contains('autoChartOption')) {
+        autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+        logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+        chartScale = 'linear';
+        function linearScale(chart) {
+            chart.options.scales.y = {
+                type: 'linear'
+            };
+            displayedChart.update();
+        }
+        linearScale();
+    } else {
+        autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+        logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+        chartScale = 'logarithmic';
+        function logarithmicScale(chart) {
+            chart.options.scales.y = {
+                type: 'logarithmic'
+            };
+            displayedChart.update();
+        }
+        logarithmicScale();
+    }
+}
+
 
 
     // CODE FOR THE CHART.JS LIBRARY
@@ -133,7 +184,9 @@ const displayedChart = new Chart(ctx, {
                     callback: function(value, index, ticks) {
                         return '$' + value;
                     }
-                }
+                },
+                display: true,
+                type: 'logarithmic' //logarithmic or linear
             }
         }
     }

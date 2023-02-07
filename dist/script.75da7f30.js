@@ -307,12 +307,28 @@ getAssetList();
 
 // CHANGE THE ASSSET ON THE CHART
 function changeAsset() {
+  // change the data on the chart
   var assetList = document.querySelector('.assetList');
   var selectedEl = assetList.options[assetList.selectedIndex];
   var ID = selectedEl.classList[0];
   selectedAsset = ID;
-  console.log(assetList.value);
   selectedAssetName = assetList.value;
+
+  // adding the tab on the selected list
+  var selectedAssetListEl = document.querySelector('.selectedAssetList');
+  var addedAsset = document.createElement('div');
+  addedAsset.classList.add('assetContainer');
+  var removeButtonEl = document.createElement('button');
+  removeButtonEl.appendChild(document.createTextNode('✖'));
+  removeButtonEl.classList.add('removeAsset');
+  addedAsset.appendChild(removeButtonEl);
+  var buttonTextEl = document.createElement('p');
+  buttonTextEl.classList.add('selectedAssetName');
+  buttonTextEl.appendChild(document.createTextNode(selectedAssetName));
+  addedAsset.appendChild(buttonTextEl);
+  selectedAssetListEl.appendChild(addedAsset);
+
+  // update the chart
   fetchData();
 }
 ;
@@ -326,6 +342,38 @@ function changeTimeframe() {
   fetchData();
 }
 selectedTimePeriodEl.addEventListener('change', changeTimeframe);
+
+// CODE FOR CHANGING THE CHART SCALE
+var chartScale = 'linear'; //logarithmic or linear
+var autoChartOption = document.querySelector('.autoChartOption');
+autoChartOption.addEventListener('click', changeChartScale);
+var logChartOption = document.querySelector('.logChartOption');
+logChartOption.addEventListener('click', changeChartScale);
+function changeChartScale(event) {
+  if (event.target.classList.contains('autoChartOption')) {
+    var linearScale = function linearScale(chart) {
+      chart.options.scales.y = {
+        type: 'linear'
+      };
+      displayedChart.update();
+    };
+    autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+    logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+    chartScale = 'linear';
+    linearScale();
+  } else {
+    var logarithmicScale = function logarithmicScale(chart) {
+      chart.options.scales.y = {
+        type: 'logarithmic'
+      };
+      displayedChart.update();
+    };
+    autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+    logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+    chartScale = 'logarithmic';
+    logarithmicScale();
+  }
+}
 
 // CODE FOR THE CHART.JS LIBRARY
 var ctx = document.querySelector('.chart');
@@ -347,7 +395,9 @@ var displayedChart = new Chart(ctx, {
           callback: function callback(value, index, ticks) {
             return '$' + value;
           }
-        }
+        },
+        display: true,
+        type: 'logarithmic' //logarithmic or linear
       }
     }
   }
@@ -383,7 +433,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61312" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62841" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
