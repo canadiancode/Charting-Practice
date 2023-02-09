@@ -128,191 +128,261 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // FETCHING AND UPDATING THE CHART
 // arrays for the price and timeframe
 var chartTimeframe = [];
-var chartPrice = [];
+var AddedPriceData = []; // the new asset getting added in
+var assetPricesData = []; // list of all assets
 
 // variables for the data
-var selectedAsset = 'bitcoin';
+var selectedAssetIDs = ['bitcoin'];
+var selectedAssetNames = ['Bitcoin'];
+var selectedAssetID = 'bitcoin';
 var selectedAssetName = 'Bitcoin';
 var selectedTimePeriod = '365';
 
-// GET THE PRICE AND TIME OF ASSET
-function fetchData() {
-  return _fetchData.apply(this, arguments);
+// FETCH TIMEFRAME OF DATA
+function fetchTimeframe() {
+  return _fetchTimeframe.apply(this, arguments);
 }
-function _fetchData() {
-  _fetchData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var URL, response, data, prices, _iterator, _step, price, epochTimeframe, formattedDate, longTimeframe, timeframe;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
+function _fetchTimeframe() {
+  _fetchTimeframe = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+    var URL, response, data, prices, _iterator4, _step4, price, epochTimeframe, formattedDate, longTimeframe, timeframe;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
-          _context.prev = 0;
+          _context3.prev = 0;
           // link to fetch data from CoinGecko
-          URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAsset, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod); // Get the dataset from CoinGecko API
-          _context.next = 4;
+          URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetID, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod); // Get the dataset from CoinGecko API
+          _context3.next = 4;
           return fetch(URL);
         case 4:
-          response = _context.sent;
-          _context.next = 7;
+          response = _context3.sent;
+          _context3.next = 7;
           return response.json();
         case 7:
-          data = _context.sent;
-          _context.next = 10;
+          data = _context3.sent;
+          _context3.next = 10;
           return data.prices;
         case 10:
-          prices = _context.sent;
-          // remove the old data on the chart
-          chartTimeframe = [];
-          chartPrice = [];
-
+          prices = _context3.sent;
           // extraction of the desired data from dataset (time and price)
           // use this instead of forEach for normal for loop for async await
-          _iterator = _createForOfIteratorHelper(prices);
-          _context.prev = 14;
-          _iterator.s();
-        case 16:
-          if ((_step = _iterator.n()).done) {
-            _context.next = 28;
+          chartTimeframe = [];
+          _iterator4 = _createForOfIteratorHelper(prices);
+          _context3.prev = 13;
+          _iterator4.s();
+        case 15:
+          if ((_step4 = _iterator4.n()).done) {
+            _context3.next = 26;
             break;
           }
-          price = _step.value;
-          _context.next = 20;
+          price = _step4.value;
+          _context3.next = 19;
           return price[0];
-        case 20:
-          epochTimeframe = _context.sent;
+        case 19:
+          epochTimeframe = _context3.sent;
           formattedDate = new Date(epochTimeframe);
           longTimeframe = formattedDate.toUTCString();
-          timeframe = longTimeframe.substring(4, 16); // add data to arrays
+          timeframe = longTimeframe.substring(4, 16); // add time to label array
           chartTimeframe.push(timeframe);
-          chartPrice.push(price[1]);
+        case 24:
+          _context3.next = 15;
+          break;
         case 26:
-          _context.next = 16;
+          _context3.next = 31;
           break;
         case 28:
-          _context.next = 33;
-          break;
-        case 30:
-          _context.prev = 30;
-          _context.t0 = _context["catch"](14);
-          _iterator.e(_context.t0);
-        case 33:
-          _context.prev = 33;
-          _iterator.f();
-          return _context.finish(33);
-        case 36:
-          // update the chart with new data
+          _context3.prev = 28;
+          _context3.t0 = _context3["catch"](13);
+          _iterator4.e(_context3.t0);
+        case 31:
+          _context3.prev = 31;
+          _iterator4.f();
+          return _context3.finish(31);
+        case 34:
+          // update the chart with new timeframe
           displayedChart.data.labels = chartTimeframe;
-          displayedChart.data.datasets.forEach(function (dataset) {
-            dataset.data = chartPrice;
-            dataset.label = "Price of ".concat(selectedAssetName);
-          });
           displayedChart.update();
-          _context.next = 45;
+          _context3.next = 42;
           break;
-        case 41:
-          _context.prev = 41;
-          _context.t1 = _context["catch"](0);
-          console.log('cannot get data from coingecko...');
-          console.log(_context.t1);
-        case 45:
+        case 38:
+          _context3.prev = 38;
+          _context3.t1 = _context3["catch"](0);
+          console.log('cannot get timeframe data from coingecko...');
+          console.log(_context3.t1);
+        case 42:
         case "end":
-          return _context.stop();
+          return _context3.stop();
       }
-    }, _callee, null, [[0, 41], [14, 30, 33, 36]]);
+    }, _callee3, null, [[0, 38], [13, 28, 31, 34]]);
   }));
-  return _fetchData.apply(this, arguments);
+  return _fetchTimeframe.apply(this, arguments);
 }
 ;
-fetchData();
+
+// GET THE PRICE OF ASSET
+function fetchPrice() {
+  return _fetchPrice.apply(this, arguments);
+}
+function _fetchPrice() {
+  _fetchPrice = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+    var URL, response, data, prices, _iterator5, _step5, price, newDataObject;
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.prev = 0;
+          // link to fetch data from CoinGecko
+          URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetIDs[0], "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod); // Get the dataset from CoinGecko API
+          _context4.next = 4;
+          return fetch(URL);
+        case 4:
+          response = _context4.sent;
+          _context4.next = 7;
+          return response.json();
+        case 7:
+          data = _context4.sent;
+          _context4.next = 10;
+          return data.prices;
+        case 10:
+          prices = _context4.sent;
+          // extraction of the desired data from dataset (time and price)
+          // use this instead of forEach for normal for loop for async await
+          AddedPriceData = [];
+          _iterator5 = _createForOfIteratorHelper(prices);
+          try {
+            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+              price = _step5.value;
+              // add price data to arrays
+              AddedPriceData.push(price[1]);
+            }
+
+            // Adding new data to the assetPricesData array
+          } catch (err) {
+            _iterator5.e(err);
+          } finally {
+            _iterator5.f();
+          }
+          newDataObject = {
+            label: "Price of ".concat(selectedAssetName),
+            data: AddedPriceData,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 1,
+            backgroundColor: "rgba(255, 255, 255)",
+            borderColor: "rgb(255, 255, 255)"
+          };
+          assetPricesData.push(newDataObject);
+          displayedChart.data.datasets = assetPricesData;
+          displayedChart.update();
+          _context4.next = 24;
+          break;
+        case 20:
+          _context4.prev = 20;
+          _context4.t0 = _context4["catch"](0);
+          console.log('cannot get price data from coingecko...');
+          console.log(_context4.t0);
+        case 24:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4, null, [[0, 20]]);
+  }));
+  return _fetchPrice.apply(this, arguments);
+}
+;
+fetchTimeframe();
+fetchPrice();
 
 // GENERATE LIST OF ASSETS
 var assetListURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
 var assetListEl = document.querySelector('.assetList');
+var addDataButton = document.querySelector('.addDataButton');
 function getAssetList() {
   return _getAssetList.apply(this, arguments);
 }
 function _getAssetList() {
-  _getAssetList = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var response, assetListData, _iterator2, _step2, asset, assetID, listOptions, assetName;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+  _getAssetList = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+    var response, assetListData, _iterator6, _step6, asset, assetID, listOptions, assetName;
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
         case 0:
-          _context2.prev = 0;
-          _context2.next = 3;
+          _context5.prev = 0;
+          _context5.next = 3;
           return fetch(assetListURL);
         case 3:
-          response = _context2.sent;
-          _context2.next = 6;
+          response = _context5.sent;
+          _context5.next = 6;
           return response.json();
         case 6:
-          assetListData = _context2.sent;
-          _iterator2 = _createForOfIteratorHelper(assetListData);
-          _context2.prev = 8;
-          _iterator2.s();
+          assetListData = _context5.sent;
+          _iterator6 = _createForOfIteratorHelper(assetListData);
+          _context5.prev = 8;
+          _iterator6.s();
         case 10:
-          if ((_step2 = _iterator2.n()).done) {
-            _context2.next = 27;
+          if ((_step6 = _iterator6.n()).done) {
+            _context5.next = 27;
             break;
           }
-          asset = _step2.value;
-          _context2.next = 14;
+          asset = _step6.value;
+          _context5.next = 14;
           return asset.id;
         case 14:
-          assetID = _context2.sent;
+          assetID = _context5.sent;
           listOptions = document.createElement('option');
           listOptions.classList.add(assetID);
 
           // for the display name
-          _context2.next = 19;
+          _context5.next = 19;
           return asset.name;
         case 19:
-          assetName = _context2.sent;
-          _context2.next = 22;
+          assetName = _context5.sent;
+          _context5.next = 22;
           return assetName;
         case 22:
-          listOptions.value = _context2.sent;
+          listOptions.value = _context5.sent;
           // add option onto the dropdown selection
           listOptions.appendChild(document.createTextNode(assetName));
           assetListEl.appendChild(listOptions);
         case 25:
-          _context2.next = 10;
+          _context5.next = 10;
           break;
         case 27:
-          _context2.next = 32;
+          _context5.next = 32;
           break;
         case 29:
-          _context2.prev = 29;
-          _context2.t0 = _context2["catch"](8);
-          _iterator2.e(_context2.t0);
+          _context5.prev = 29;
+          _context5.t0 = _context5["catch"](8);
+          _iterator6.e(_context5.t0);
         case 32:
-          _context2.prev = 32;
-          _iterator2.f();
-          return _context2.finish(32);
+          _context5.prev = 32;
+          _iterator6.f();
+          return _context5.finish(32);
         case 35:
-          _context2.next = 41;
+          _context5.next = 41;
           break;
         case 37:
-          _context2.prev = 37;
-          _context2.t1 = _context2["catch"](0);
-          console.log(_context2.t1);
+          _context5.prev = 37;
+          _context5.t1 = _context5["catch"](0);
+          console.log(_context5.t1);
           console.log('cannot get list of assets from CoinGecko...');
         case 41:
         case "end":
-          return _context2.stop();
+          return _context5.stop();
       }
-    }, _callee2, null, [[0, 37], [8, 29, 32, 35]]);
+    }, _callee5, null, [[0, 37], [8, 29, 32, 35]]);
   }));
   return _getAssetList.apply(this, arguments);
 }
 getAssetList();
 
-// CHANGE THE ASSSET ON THE CHART
-function changeAsset() {
+// ADD NEW ASSET TO THE CHART
+function addAsset() {
   // change the data on the chart
   var assetList = document.querySelector('.assetList');
   var selectedEl = assetList.options[assetList.selectedIndex];
   var ID = selectedEl.classList[0];
-  selectedAsset = ID;
+  selectedAssetID = ID;
   selectedAssetName = assetList.value;
+  selectedAssetNames.push(selectedAssetName);
+  selectedAssetIDs.push(ID);
 
   // adding the tab on the selected list
   var selectedAssetListEl = document.querySelector('.selectedAssetList');
@@ -327,20 +397,241 @@ function changeAsset() {
   buttonTextEl.appendChild(document.createTextNode(selectedAssetName));
   addedAsset.appendChild(buttonTextEl);
   selectedAssetListEl.appendChild(addedAsset);
+  function fetchNewPrice() {
+    return _fetchNewPrice.apply(this, arguments);
+  }
+  function _fetchNewPrice() {
+    _fetchNewPrice = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var URL, response, data, prices, _iterator, _step, price, newDataObject;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            // link to fetch data from CoinGecko
+            URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetID, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod); // Get the dataset from CoinGecko API
+            _context.next = 4;
+            return fetch(URL);
+          case 4:
+            response = _context.sent;
+            _context.next = 7;
+            return response.json();
+          case 7:
+            data = _context.sent;
+            _context.next = 10;
+            return data.prices;
+          case 10:
+            prices = _context.sent;
+            // extraction of the desired data from dataset (time and price)
+            // use this instead of forEach for normal for loop for async await
+            AddedPriceData = [];
+            _iterator = _createForOfIteratorHelper(prices);
+            try {
+              for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                price = _step.value;
+                // add price data to arrays
+                AddedPriceData.push(price[1]);
+              }
+
+              // Adding new data to the assetPricesData array
+            } catch (err) {
+              _iterator.e(err);
+            } finally {
+              _iterator.f();
+            }
+            newDataObject = {
+              label: "Price of ".concat(selectedAssetName),
+              data: AddedPriceData,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: "rgba(255, 255, 255)",
+              borderColor: "rgb(255, 255, 255)"
+            };
+            assetPricesData.push(newDataObject);
+            displayedChart.data.datasets = assetPricesData;
+            displayedChart.update();
+            _context.next = 24;
+            break;
+          case 20:
+            _context.prev = 20;
+            _context.t0 = _context["catch"](0);
+            console.log('cannot get price data from coingecko...');
+            console.log(_context.t0);
+          case 24:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 20]]);
+    }));
+    return _fetchNewPrice.apply(this, arguments);
+  }
+  ;
 
   // update the chart
-  fetchData();
+  fetchNewPrice();
+  fetchTimeframe();
 }
 ;
-assetListEl.addEventListener('change', changeAsset);
+addDataButton.addEventListener('click', addAsset);
 
 // CHANGE THE TIME PERIOD ON THE CHART
-var selectedTimePeriodEl = document.querySelector('.timeframeList');
 function changeTimeframe() {
   var timeframeList = document.querySelector('.timeframeList');
   selectedTimePeriod = timeframeList.value;
-  fetchData();
+  assetPricesData = [];
+  function fetchNewTimeframe() {
+    return _fetchNewTimeframe.apply(this, arguments);
+  } // let newDataObject = {
+  //     label: `Price of ${selectedAssetNames[i]}`,
+  //     data: AddedPriceData,
+  //     fill: false,
+  //     pointRadius: 0,
+  //     borderWidth: 1,
+  //     backgroundColor: "rgba(255, 255, 255)",
+  //     borderColor: "rgb(255, 255, 255)",
+  // };
+  // assetPricesData.push(newDataObject);
+  function _fetchNewTimeframe() {
+    _fetchNewTimeframe = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var timeframeURL, response, fetchedData, timeData, _iterator2, _step2, time, epochTimeframe, formattedDate, longTimeframe, timeframe, singleAssetPriceData, listOfAssetPrices, _iterator3, _step3, asset, assetPriceURL, _response, assetPriceData, assetPriceAndTime, i, newDataObject;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            // FETCH AND DISPLAY TIMEFRAME DATA
+            timeframeURL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetID, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod);
+            _context2.next = 4;
+            return fetch(timeframeURL);
+          case 4:
+            response = _context2.sent;
+            _context2.next = 7;
+            return response.json();
+          case 7:
+            fetchedData = _context2.sent;
+            _context2.next = 10;
+            return fetchedData.prices;
+          case 10:
+            timeData = _context2.sent;
+            // remove old time data to replace with new data
+            chartTimeframe = [];
+
+            // looping through the fetched data and pushing to displayed array
+            _iterator2 = _createForOfIteratorHelper(timeData);
+            _context2.prev = 13;
+            _iterator2.s();
+          case 15:
+            if ((_step2 = _iterator2.n()).done) {
+              _context2.next = 26;
+              break;
+            }
+            time = _step2.value;
+            _context2.next = 19;
+            return time[0];
+          case 19:
+            epochTimeframe = _context2.sent;
+            formattedDate = new Date(epochTimeframe);
+            longTimeframe = formattedDate.toUTCString();
+            timeframe = longTimeframe.substring(4, 16);
+            chartTimeframe.push(timeframe);
+          case 24:
+            _context2.next = 15;
+            break;
+          case 26:
+            _context2.next = 31;
+            break;
+          case 28:
+            _context2.prev = 28;
+            _context2.t0 = _context2["catch"](13);
+            _iterator2.e(_context2.t0);
+          case 31:
+            _context2.prev = 31;
+            _iterator2.f();
+            return _context2.finish(31);
+          case 34:
+            // update the chart with the new time data
+            displayedChart.data.labels = chartTimeframe;
+            displayedChart.update();
+
+            // FETCH AND DISPLAY PRICE DATA
+            singleAssetPriceData = [];
+            listOfAssetPrices = [];
+            _iterator3 = _createForOfIteratorHelper(selectedAssetIDs);
+            _context2.prev = 39;
+            _iterator3.s();
+          case 41:
+            if ((_step3 = _iterator3.n()).done) {
+              _context2.next = 58;
+              break;
+            }
+            asset = _step3.value;
+            assetPriceURL = "https://api.coingecko.com/api/v3/coins/".concat(asset, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod);
+            _context2.next = 46;
+            return fetch(assetPriceURL);
+          case 46:
+            _response = _context2.sent;
+            _context2.next = 49;
+            return _response.json();
+          case 49:
+            assetPriceData = _context2.sent;
+            _context2.next = 52;
+            return assetPriceData.prices;
+          case 52:
+            assetPriceAndTime = _context2.sent;
+            singleAssetPriceData = [];
+            assetPriceAndTime.forEach(function (array) {
+              var justPrice = array[1];
+              singleAssetPriceData.push(justPrice);
+            });
+            listOfAssetPrices.push(singleAssetPriceData);
+          case 56:
+            _context2.next = 41;
+            break;
+          case 58:
+            _context2.next = 63;
+            break;
+          case 60:
+            _context2.prev = 60;
+            _context2.t1 = _context2["catch"](39);
+            _iterator3.e(_context2.t1);
+          case 63:
+            _context2.prev = 63;
+            _iterator3.f();
+            return _context2.finish(63);
+          case 66:
+            ;
+            for (i = 0; i < selectedAssetNames.length; i++) {
+              newDataObject = {
+                label: "Price of ".concat(selectedAssetNames[i]),
+                data: listOfAssetPrices[i],
+                fill: false,
+                pointRadius: 0,
+                borderWidth: 1,
+                backgroundColor: "rgba(255, 255, 255)",
+                borderColor: "rgb(255, 255, 255)"
+              };
+              assetPricesData.push(newDataObject);
+            }
+            displayedChart.data.datasets = assetPricesData;
+            displayedChart.update();
+            _context2.next = 76;
+            break;
+          case 72:
+            _context2.prev = 72;
+            _context2.t2 = _context2["catch"](0);
+            console.log('cannot get new timeframe data from coingecko...');
+            console.log(_context2.t2);
+          case 76:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[0, 72], [13, 28, 31, 34], [39, 60, 63, 66]]);
+    }));
+    return _fetchNewTimeframe.apply(this, arguments);
+  }
+  fetchNewTimeframe();
 }
+;
+var selectedTimePeriodEl = document.querySelector('.timeframeList');
 selectedTimePeriodEl.addEventListener('change', changeTimeframe);
 
 // CODE FOR CHANGING THE CHART SCALE
@@ -351,27 +642,17 @@ var logChartOption = document.querySelector('.logChartOption');
 logChartOption.addEventListener('click', changeChartScale);
 function changeChartScale(event) {
   if (event.target.classList.contains('autoChartOption')) {
-    var linearScale = function linearScale(chart) {
-      chart.options.scales.y = {
-        type: 'linear'
-      };
-      displayedChart.update();
-    };
     autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
     logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
     chartScale = 'linear';
-    linearScale();
+    displayedChart.options.scales.y.type = chartScale;
+    displayedChart.update();
   } else {
-    var logarithmicScale = function logarithmicScale(chart) {
-      chart.options.scales.y = {
-        type: 'logarithmic'
-      };
-      displayedChart.update();
-    };
     autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
     logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
     chartScale = 'logarithmic';
-    logarithmicScale();
+    displayedChart.options.scales.y.type = chartScale;
+    displayedChart.update();
   }
 }
 
@@ -379,14 +660,10 @@ function changeChartScale(event) {
 var ctx = document.querySelector('.chart');
 var displayedChart = new Chart(ctx, {
   type: 'line',
+  // data: assetPricesData,
   data: {
-    labels: [chartTimeframe],
-    datasets: [{
-      data: [chartPrice],
-      label: "Price of ".concat(selectedAsset),
-      borderWidth: 1,
-      pointRadius: 0
-    }]
+    labels: chartTimeframe,
+    datasets: assetPricesData
   },
   options: {
     scales: {
@@ -397,7 +674,7 @@ var displayedChart = new Chart(ctx, {
           }
         },
         display: true,
-        type: 'logarithmic' //logarithmic or linear
+        type: chartScale //logarithmic or linear
       }
     }
   }
@@ -433,7 +710,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62841" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64706" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

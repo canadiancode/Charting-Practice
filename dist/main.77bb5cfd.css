@@ -76,6 +76,7 @@ select {
   min-height: 100vh;
   width: 100%;
   background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
+  padding-bottom: 2em;
 }
 .dashboardContainer .headingContainer {
   width: 100%;
@@ -94,8 +95,11 @@ select {
   justify-content: center;
   width: 100%;
   margin: 0 auto;
+  max-width: 700px;
+  justify-content: center;
+  padding: 10px;
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   .dashboardContainer .selectionDiv {
     flex-direction: column;
     gap: 1em;
@@ -114,19 +118,22 @@ select {
 .dashboardContainer .selectionDiv .assetSelectionDiv .assetList {
   max-width: 200px;
 }
-.dashboardContainer .selectionDiv .timeframeSelectionDiv {
+.dashboardContainer .selectionDiv .chartTypeSelection {
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
-  color: white;
-  list-style: none;
-  display: flex;
-  flex-direction: row;
+  margin: 0 auto;
   gap: 0.5rem;
 }
-.dashboardContainer .selectionDiv .timeframeSelectionDiv .timeframeList {
-  max-width: 150px;
+.dashboardContainer .selectionDiv .chartTypeSelection .chartTypeList {
+  align-self: center;
+  min-width: 100px;
+}
+.dashboardContainer .selectionDiv .addDataDiv {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 .dashboardContainer .selectedList {
   width: 100%;
@@ -135,13 +142,7 @@ select {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-}
-.dashboardContainer .selectedList .chartTypeSelection {
-  padding: 10px;
-}
-.dashboardContainer .selectedList .chartTypeSelection .chartTypeList {
-  align-self: center;
-  min-width: 100px;
+  max-width: 1000px;
 }
 .dashboardContainer .selectedList .selectedAssetList {
   width: 100%;
@@ -201,14 +202,37 @@ select {
   margin: 0 auto;
 }
 .dashboardContainer .chartSection .chart {
-  max-width: 1000px;
+  max-width: 900px;
+  max-height: 400px;
 }
 .dashboardContainer .chartOptions {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 0em 1em;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.dashboardContainer .chartOptions .timeframeSelectionDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  color: white;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+.dashboardContainer .chartOptions .timeframeSelectionDiv .timeframeList {
+  max-width: 150px;
+}
+.dashboardContainer .chartOptions .logOptionDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 .dashboardContainer .chartOptions .logOptionDiv .chartLogAutoButton {
   padding: 0em 15px;

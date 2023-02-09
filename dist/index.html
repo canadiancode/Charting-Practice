@@ -25,45 +25,29 @@
 
         <!-- Button to select displayed asset -->
         <div class="selectionDiv">
+            <div class="chartTypeSelection">
+                <label>Dataset:</label>
+                <select class="chartTypeList">
+                    <option class="chartTypeOption">Price</option>
+                </select>
+            </div>
             <div class="assetSelectionDiv">
                 <label>Asset:</label>
                 <select class="assetList">
                     <!-- List of assets are going within this select list -->
                 </select>
             </div>
-            <div class="timeframeSelectionDiv">
-                <label>Timeframe:</label>
-                <select class="timeframeList">
-                    <option value="1460" class="timeframe year">4 Year</option>
-                    <option value="1095" class="timeframe year">3 Year</option>
-                    <option value="730" class="timeframe year">2 Year</option>
-                    <option value="365" selected="" class="timeframe year">1 Year</option>
-                    <option value="120" class="timeframe onequarter">90D</option>
-                    <option value="30" class="timeframe onequarter">30D</option>
-                    <option value="7" class="timeframe onequarter">7D</option>
-                </select>
+            <div class="addDataDiv">
+                <button class="addDataButton">+ ADD DATA</button>
             </div>
         </div>
 
         <div class="selectedList">
-            <div class="chartTypeSelection">
-                <select class="chartTypeList">
-                    <option class="chartTypeOption">Price</option>
-                </select>
-            </div>
             <div class="selectedAssetList">
                 <!-- This is where the assets would come in -->
                 <div class="assetContainer">
                     <button class="removeAsset">✖</button>
                     <p class="selectedAssetName">Bitcoin</p>
-                </div>
-                <div class="assetContainer">
-                    <button class="removeAsset">✖</button>
-                    <p class="selectedAssetName">Ethereum</p>
-                </div>
-                <div class="assetContainer">
-                    <button class="removeAsset">✖</button>
-                    <p class="selectedAssetName">Binance Coin</p>
                 </div>
             </div>
         </div>
@@ -82,9 +66,26 @@
         </section>
 
         <div class="chartOptions">
+            <div class="timeframeSelectionDiv">
+                <label>Timeframe:</label>
+                <select class="timeframeList">
+                    <option value="3650" class="timeframe year">10 Year</option>
+                    <option value="2555" class="timeframe year">7 Year</option>
+                    <option value="1825" class="timeframe year">5 Year</option>
+                    <option value="1460" class="timeframe year">4 Year</option>
+                    <option value="1095" class="timeframe year">3 Year</option>
+                    <option value="730" class="timeframe year">2 Year</option>
+                    <option value="365" selected="" class="timeframe year">1 Year</option>
+                    <option value="120" class="timeframe onequarter">90D</option>
+                    <option value="30" class="timeframe onequarter">30D</option>
+                    <option value="7" class="timeframe onequarter">7D</option>
+                </select>
+            </div>
             <div class="logOptionDiv">
-                <button class="chartLogAutoButton autoChartOption">Auto</button>
-                <button class="chartLogAutoButton logChartOption">Log</button>
+                <div>
+                    <button class="chartLogAutoButton autoChartOption">Auto</button>
+                    <button class="chartLogAutoButton logChartOption">Log</button>
+                </div>
             </div>
         </div>
 
