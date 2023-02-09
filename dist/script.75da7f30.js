@@ -373,6 +373,8 @@ function _getAssetList() {
 }
 getAssetList();
 
+// Function to generate random color
+
 // ADD NEW ASSET TO THE CHART
 function addAsset() {
   // change the data on the chart
@@ -444,8 +446,8 @@ function addAsset() {
               fill: false,
               pointRadius: 0,
               borderWidth: 1,
-              backgroundColor: "rgba(255, 255, 255)",
-              borderColor: "rgb(255, 255, 255)"
+              backgroundColor: "#FFFFFF",
+              borderColor: "#FFFFFF"
             };
             assetPricesData.push(newDataObject);
             displayedChart.data.datasets = assetPricesData;
@@ -606,8 +608,8 @@ function changeTimeframe() {
                 fill: false,
                 pointRadius: 0,
                 borderWidth: 1,
-                backgroundColor: "rgba(255, 255, 255)",
-                borderColor: "rgb(255, 255, 255)"
+                backgroundColor: "#FFFFFF",
+                borderColor: "#FFFFFF"
               };
               assetPricesData.push(newDataObject);
             }

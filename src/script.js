@@ -120,6 +120,8 @@ async function getAssetList() {
 }
 getAssetList();
 
+    // Function to generate random color
+
     // ADD NEW ASSET TO THE CHART
 function addAsset() {
 
@@ -171,8 +173,8 @@ function addAsset() {
                 fill: false,
                 pointRadius: 0,
                 borderWidth: 1,
-                backgroundColor: "rgba(255, 255, 255)",
-                borderColor: "rgb(255, 255, 255)",
+                backgroundColor: "#FFFFFF",
+                borderColor: "#FFFFFF",
             };
             assetPricesData.push(newDataObject);
             displayedChart.data.datasets = assetPricesData;
@@ -200,6 +202,7 @@ function changeTimeframe() {
     assetPricesData = [];
 
     async function fetchNewTimeframe() {
+
         try {
                 // FETCH AND DISPLAY TIMEFRAME DATA
             let timeframeURL = `https://api.coingecko.com/api/v3/coins/${selectedAssetID}/market_chart?vs_currency=usd&days=${selectedTimePeriod}`;
@@ -246,8 +249,8 @@ function changeTimeframe() {
                     fill: false,
                     pointRadius: 0,
                     borderWidth: 1,
-                    backgroundColor: "rgba(255, 255, 255)",
-                    borderColor: "rgb(255, 255, 255)",
+                    backgroundColor: "#FFFFFF",
+                    borderColor: "#FFFFFF",
                 };
                 assetPricesData.push(newDataObject);
             }
