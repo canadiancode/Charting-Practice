@@ -269,8 +269,8 @@ function _fetchPrice() {
             fill: false,
             pointRadius: 0,
             borderWidth: 1,
-            backgroundColor: "rgba(255, 255, 255)",
-            borderColor: "rgb(255, 255, 255)",
+            backgroundColor: '#FFFFFF',
+            borderColor: '#FFFFFF',
             yAxisID: 'y'
           };
           assetPricesData.push(newDataObject);
@@ -377,8 +377,6 @@ function _getAssetList() {
 }
 getAssetList();
 
-// Function to generate random color
-
 // ADD NEW ASSET TO THE CHART
 function addAsset() {
   // change the data on the chart
@@ -413,24 +411,28 @@ function addAsset() {
   }
   function _fetchNewPrice() {
     _fetchNewPrice = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var URL, response, data, prices, _iterator, _step, price, newDataObject;
+      var randomHSL, URL, response, data, prices, _iterator, _step, price, randomColor, newDataObject;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
+            // generate random light color
+            randomHSL = function randomHSL() {
+              return "hsla(" + ~~(360 * Math.random()) + "," + "50%," + "50%,1)";
+            };
             // link to fetch data from CoinGecko
             URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetID, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod); // Get the dataset from CoinGecko API
-            _context.next = 4;
+            _context.next = 5;
             return fetch(URL);
-          case 4:
+          case 5:
             response = _context.sent;
-            _context.next = 7;
+            _context.next = 8;
             return response.json();
-          case 7:
+          case 8:
             data = _context.sent;
-            _context.next = 10;
+            _context.next = 11;
             return data.prices;
-          case 10:
+          case 11:
             prices = _context.sent;
             // extraction of the desired data from dataset (time and price)
             // use this instead of forEach for normal for loop for async await
@@ -442,38 +444,39 @@ function addAsset() {
                 // add price data to arrays
                 AddedPriceData.push(price[1]);
               }
-
-              // Adding new data to the assetPricesData array
             } catch (err) {
               _iterator.e(err);
             } finally {
               _iterator.f();
             }
+            ;
+            ;
+            randomColor = randomHSL(); // Adding new data to the assetPricesData array
             newDataObject = {
               label: "Price of ".concat(selectedAssetName),
               data: AddedPriceData,
               fill: false,
               pointRadius: 0,
               borderWidth: 1,
-              backgroundColor: "#FFFFFF",
-              borderColor: "#FFFFFF",
+              backgroundColor: randomColor,
+              borderColor: randomColor,
               yAxisID: yAxisvalue
             };
             assetPricesData.push(newDataObject);
             displayedChart.data.datasets = assetPricesData;
             displayedChart.update();
-            _context.next = 24;
+            _context.next = 28;
             break;
-          case 20:
-            _context.prev = 20;
+          case 24:
+            _context.prev = 24;
             _context.t0 = _context["catch"](0);
             console.log('cannot get price data from coingecko...');
             console.log(_context.t0);
-          case 24:
+          case 28:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 20]]);
+      }, _callee, null, [[0, 24]]);
     }));
     return _fetchNewPrice.apply(this, arguments);
   }
@@ -496,7 +499,7 @@ function changeTimeframe() {
   }
   function _fetchNewTimeframe() {
     _fetchNewTimeframe = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var timeframeURL, response, fetchedData, timeData, _iterator2, _step2, time, epochTimeframe, formattedDate, longTimeframe, timeframe, singleAssetPriceData, listOfAssetPrices, _iterator3, _step3, asset, assetPriceURL, _response, assetPriceData, assetPriceAndTime, i, yAxisNumberString, yAxisvalue, newDataObject;
+      var timeframeURL, response, fetchedData, timeData, _iterator2, _step2, time, epochTimeframe, formattedDate, longTimeframe, timeframe, singleAssetPriceData, listOfAssetPrices, _iterator3, _step3, asset, assetPriceURL, _response, assetPriceData, assetPriceAndTime, i, yAxisNumberString, yAxisvalue, selectedBackgroundColor, selectedBorderColor, newDataObject;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
@@ -607,15 +610,17 @@ function changeTimeframe() {
               // add a new yAxis to the chart
               yAxisCount++;
               yAxisNumberString = yAxisCount.toString();
-              yAxisvalue = 'y' + yAxisNumberString;
+              yAxisvalue = 'y' + yAxisNumberString; // generate pre-selected color for each asset
+              selectedBackgroundColor = displayedChart.data.datasets[i].backgroundColor;
+              selectedBorderColor = displayedChart.data.datasets[i].borderColor;
               newDataObject = {
                 label: "Price of ".concat(selectedAssetNames[i]),
                 data: listOfAssetPrices[i],
                 fill: false,
                 pointRadius: 0,
                 borderWidth: 1,
-                backgroundColor: "#FFFFFF",
-                borderColor: "#FFFFFF",
+                backgroundColor: selectedBackgroundColor,
+                borderColor: selectedBorderColor,
                 yAxisID: yAxisvalue
               };
               assetPricesData.push(newDataObject);

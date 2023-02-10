@@ -76,8 +76,8 @@ async function fetchPrice() {
             fill: false,
             pointRadius: 0,
             borderWidth: 1,
-            backgroundColor: "rgba(255, 255, 255)",
-            borderColor: "rgb(255, 255, 255)",
+            backgroundColor: '#FFFFFF',
+            borderColor: '#FFFFFF',
             yAxisID: 'y'
         };
         assetPricesData.push(newDataObject);
@@ -123,8 +123,6 @@ async function getAssetList() {
     }
 }
 getAssetList();
-
-    // Function to generate random color
 
     // ADD NEW ASSET TO THE CHART
 function addAsset() {
@@ -173,7 +171,13 @@ function addAsset() {
             for (const price of prices) {
                 // add price data to arrays
                 AddedPriceData.push(price[1]);
-            }
+            };
+
+            // generate random light color
+            function randomHSL() {
+                return "hsla(" + ~~(360 * Math.random()) + "," + "50%," + "50%,1)"
+            };
+            let randomColor = randomHSL();
     
             // Adding new data to the assetPricesData array
             let newDataObject = {
@@ -182,8 +186,8 @@ function addAsset() {
                 fill: false,
                 pointRadius: 0,
                 borderWidth: 1,
-                backgroundColor: "#FFFFFF",
-                borderColor: "#FFFFFF",
+                backgroundColor: randomColor,
+                borderColor: randomColor,
                 yAxisID: yAxisvalue
             };
             assetPricesData.push(newDataObject);
@@ -263,14 +267,18 @@ function changeTimeframe() {
                 let yAxisNumberString = yAxisCount.toString();
                 let yAxisvalue = 'y' + yAxisNumberString;
 
+                // generate pre-selected color for each asset
+                let selectedBackgroundColor = displayedChart.data.datasets[i].backgroundColor;
+                let selectedBorderColor = displayedChart.data.datasets[i].borderColor;
+
                 let newDataObject = {
                     label: `Price of ${selectedAssetNames[i]}`,
                     data: listOfAssetPrices[i],
                     fill: false,
                     pointRadius: 0,
                     borderWidth: 1,
-                    backgroundColor: "#FFFFFF",
-                    borderColor: "#FFFFFF",
+                    backgroundColor: selectedBackgroundColor,
+                    borderColor: selectedBorderColor,
                     yAxisID: yAxisvalue
                 };
                 assetPricesData.push(newDataObject);
