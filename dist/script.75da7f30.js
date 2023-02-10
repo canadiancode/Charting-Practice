@@ -269,8 +269,8 @@ function _fetchPrice() {
             fill: false,
             pointRadius: 0,
             borderWidth: 1,
-            backgroundColor: '#FFFFFF',
-            borderColor: '#FFFFFF',
+            backgroundColor: '#FFA500',
+            borderColor: '#FFA500',
             yAxisID: 'y'
           };
           assetPricesData.push(newDataObject);
@@ -465,18 +465,23 @@ function addAsset() {
             assetPricesData.push(newDataObject);
             displayedChart.data.datasets = assetPricesData;
             displayedChart.update();
-            _context.next = 28;
+
+            // incorporate variable for chart scale
+
+            // update the chart with new data
+            displayedChart.update();
+            _context.next = 29;
             break;
-          case 24:
-            _context.prev = 24;
+          case 25:
+            _context.prev = 25;
             _context.t0 = _context["catch"](0);
             console.log('cannot get price data from coingecko...');
             console.log(_context.t0);
-          case 28:
+          case 29:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 24]]);
+      }, _callee, null, [[0, 25]]);
     }));
     return _fetchNewPrice.apply(this, arguments);
   }
@@ -716,7 +721,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64706" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59222" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

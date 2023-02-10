@@ -76,8 +76,8 @@ async function fetchPrice() {
             fill: false,
             pointRadius: 0,
             borderWidth: 1,
-            backgroundColor: '#FFFFFF',
-            borderColor: '#FFFFFF',
+            backgroundColor: '#FFA500',
+            borderColor: '#FFA500',
             yAxisID: 'y'
         };
         assetPricesData.push(newDataObject);
@@ -192,6 +192,11 @@ function addAsset() {
             };
             assetPricesData.push(newDataObject);
             displayedChart.data.datasets = assetPricesData;
+            displayedChart.update();
+
+            // incorporate variable for chart scale
+
+            // update the chart with new data
             displayedChart.update();
         }
         catch(error) {
@@ -310,7 +315,7 @@ function changeChartScale(event) {
         chartScale = 'linear';
         displayedChart.options.scales.y.type = chartScale;
         displayedChart.update();
-    } else {
+} else {
         autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
         logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
         chartScale = 'logarithmic';
