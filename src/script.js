@@ -12,6 +12,9 @@ let selectedAssetID = 'bitcoin';
 let selectedAssetName = 'Bitcoin';
 let selectedTimePeriod = '365';
 
+// count to add a new yAxis each time
+let yAxisCount = 1;
+
     // FETCH TIMEFRAME OF DATA
 async function fetchTimeframe() {
     try {
@@ -75,6 +78,7 @@ async function fetchPrice() {
             borderWidth: 1,
             backgroundColor: "rgba(255, 255, 255)",
             borderColor: "rgb(255, 255, 255)",
+            yAxisID: 'y'
         };
         assetPricesData.push(newDataObject);
         displayedChart.data.datasets = assetPricesData;
@@ -148,6 +152,11 @@ function addAsset() {
     addedAsset.appendChild(buttonTextEl);
     selectedAssetListEl.appendChild(addedAsset);
 
+    // add a new yAxis to the chart
+    yAxisCount++;
+    let yAxisNumberString = yAxisCount.toString();
+    let yAxisvalue = 'y' + yAxisNumberString;
+
     async function fetchNewPrice() {
         try {
             // link to fetch data from CoinGecko
@@ -175,6 +184,7 @@ function addAsset() {
                 borderWidth: 1,
                 backgroundColor: "#FFFFFF",
                 borderColor: "#FFFFFF",
+                yAxisID: yAxisvalue
             };
             assetPricesData.push(newDataObject);
             displayedChart.data.datasets = assetPricesData;
@@ -230,6 +240,10 @@ function changeTimeframe() {
                 // FETCH AND DISPLAY PRICE DATA
             let singleAssetPriceData = [];
             let listOfAssetPrices = [];
+
+            // this removes the old yAxis scales
+            displayedChart.options.scales = {};
+
             for (const asset of selectedAssetIDs) {
                 let assetPriceURL = `https://api.coingecko.com/api/v3/coins/${asset}/market_chart?vs_currency=usd&days=${selectedTimePeriod}`;
                 const response = await fetch(assetPriceURL);
@@ -243,6 +257,12 @@ function changeTimeframe() {
                 listOfAssetPrices.push(singleAssetPriceData);
             };
             for (let i = 0; i < selectedAssetNames.length; i++) {
+
+                // add a new yAxis to the chart
+                yAxisCount++;
+                let yAxisNumberString = yAxisCount.toString();
+                let yAxisvalue = 'y' + yAxisNumberString;
+
                 let newDataObject = {
                     label: `Price of ${selectedAssetNames[i]}`,
                     data: listOfAssetPrices[i],
@@ -251,6 +271,7 @@ function changeTimeframe() {
                     borderWidth: 1,
                     backgroundColor: "#FFFFFF",
                     borderColor: "#FFFFFF",
+                    yAxisID: yAxisvalue
                 };
                 assetPricesData.push(newDataObject);
             }
@@ -262,16 +283,6 @@ function changeTimeframe() {
             console.log(error);
         }
     }
-    // let newDataObject = {
-    //     label: `Price of ${selectedAssetNames[i]}`,
-    //     data: AddedPriceData,
-    //     fill: false,
-    //     pointRadius: 0,
-    //     borderWidth: 1,
-    //     backgroundColor: "rgba(255, 255, 255)",
-    //     borderColor: "rgb(255, 255, 255)",
-    // };
-    // assetPricesData.push(newDataObject);
     fetchNewTimeframe();
 };
 const selectedTimePeriodEl = document.querySelector('.timeframeList');
@@ -310,17 +321,9 @@ const displayedChart = new Chart(ctx, {
         datasets: assetPricesData,
     },
     options: {
-        scales: {
-            y: {
-                ticks: {
-                    callback: function(value, index, ticks) {
-                        return '$' + value;
-                    }
-                },
-                display: true,
-                type: chartScale //logarithmic or linear
-            }
-        }
+        type: chartScale,
+        display: true,
+        position: 'left',
     }
   });
 

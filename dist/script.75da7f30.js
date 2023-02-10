@@ -138,6 +138,9 @@ var selectedAssetID = 'bitcoin';
 var selectedAssetName = 'Bitcoin';
 var selectedTimePeriod = '365';
 
+// count to add a new yAxis each time
+var yAxisCount = 1;
+
 // FETCH TIMEFRAME OF DATA
 function fetchTimeframe() {
   return _fetchTimeframe.apply(this, arguments);
@@ -267,7 +270,8 @@ function _fetchPrice() {
             pointRadius: 0,
             borderWidth: 1,
             backgroundColor: "rgba(255, 255, 255)",
-            borderColor: "rgb(255, 255, 255)"
+            borderColor: "rgb(255, 255, 255)",
+            yAxisID: 'y'
           };
           assetPricesData.push(newDataObject);
           displayedChart.data.datasets = assetPricesData;
@@ -399,6 +403,11 @@ function addAsset() {
   buttonTextEl.appendChild(document.createTextNode(selectedAssetName));
   addedAsset.appendChild(buttonTextEl);
   selectedAssetListEl.appendChild(addedAsset);
+
+  // add a new yAxis to the chart
+  yAxisCount++;
+  var yAxisNumberString = yAxisCount.toString();
+  var yAxisvalue = 'y' + yAxisNumberString;
   function fetchNewPrice() {
     return _fetchNewPrice.apply(this, arguments);
   }
@@ -447,7 +456,8 @@ function addAsset() {
               pointRadius: 0,
               borderWidth: 1,
               backgroundColor: "#FFFFFF",
-              borderColor: "#FFFFFF"
+              borderColor: "#FFFFFF",
+              yAxisID: yAxisvalue
             };
             assetPricesData.push(newDataObject);
             displayedChart.data.datasets = assetPricesData;
@@ -483,19 +493,10 @@ function changeTimeframe() {
   assetPricesData = [];
   function fetchNewTimeframe() {
     return _fetchNewTimeframe.apply(this, arguments);
-  } // let newDataObject = {
-  //     label: `Price of ${selectedAssetNames[i]}`,
-  //     data: AddedPriceData,
-  //     fill: false,
-  //     pointRadius: 0,
-  //     borderWidth: 1,
-  //     backgroundColor: "rgba(255, 255, 255)",
-  //     borderColor: "rgb(255, 255, 255)",
-  // };
-  // assetPricesData.push(newDataObject);
+  }
   function _fetchNewTimeframe() {
     _fetchNewTimeframe = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var timeframeURL, response, fetchedData, timeData, _iterator2, _step2, time, epochTimeframe, formattedDate, longTimeframe, timeframe, singleAssetPriceData, listOfAssetPrices, _iterator3, _step3, asset, assetPriceURL, _response, assetPriceData, assetPriceAndTime, i, newDataObject;
+      var timeframeURL, response, fetchedData, timeData, _iterator2, _step2, time, epochTimeframe, formattedDate, longTimeframe, timeframe, singleAssetPriceData, listOfAssetPrices, _iterator3, _step3, asset, assetPriceURL, _response, assetPriceData, assetPriceAndTime, i, yAxisNumberString, yAxisvalue, newDataObject;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
@@ -556,28 +557,29 @@ function changeTimeframe() {
 
             // FETCH AND DISPLAY PRICE DATA
             singleAssetPriceData = [];
-            listOfAssetPrices = [];
+            listOfAssetPrices = []; // this removes the old yAxis scales
+            displayedChart.options.scales = {};
             _iterator3 = _createForOfIteratorHelper(selectedAssetIDs);
-            _context2.prev = 39;
+            _context2.prev = 40;
             _iterator3.s();
-          case 41:
+          case 42:
             if ((_step3 = _iterator3.n()).done) {
-              _context2.next = 58;
+              _context2.next = 59;
               break;
             }
             asset = _step3.value;
             assetPriceURL = "https://api.coingecko.com/api/v3/coins/".concat(asset, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod);
-            _context2.next = 46;
+            _context2.next = 47;
             return fetch(assetPriceURL);
-          case 46:
+          case 47:
             _response = _context2.sent;
-            _context2.next = 49;
+            _context2.next = 50;
             return _response.json();
-          case 49:
+          case 50:
             assetPriceData = _context2.sent;
-            _context2.next = 52;
+            _context2.next = 53;
             return assetPriceData.prices;
-          case 52:
+          case 53:
             assetPriceAndTime = _context2.sent;
             singleAssetPriceData = [];
             assetPriceAndTime.forEach(function (array) {
@@ -585,23 +587,27 @@ function changeTimeframe() {
               singleAssetPriceData.push(justPrice);
             });
             listOfAssetPrices.push(singleAssetPriceData);
-          case 56:
-            _context2.next = 41;
+          case 57:
+            _context2.next = 42;
             break;
-          case 58:
-            _context2.next = 63;
+          case 59:
+            _context2.next = 64;
             break;
-          case 60:
-            _context2.prev = 60;
-            _context2.t1 = _context2["catch"](39);
+          case 61:
+            _context2.prev = 61;
+            _context2.t1 = _context2["catch"](40);
             _iterator3.e(_context2.t1);
-          case 63:
-            _context2.prev = 63;
+          case 64:
+            _context2.prev = 64;
             _iterator3.f();
-            return _context2.finish(63);
-          case 66:
+            return _context2.finish(64);
+          case 67:
             ;
             for (i = 0; i < selectedAssetNames.length; i++) {
+              // add a new yAxis to the chart
+              yAxisCount++;
+              yAxisNumberString = yAxisCount.toString();
+              yAxisvalue = 'y' + yAxisNumberString;
               newDataObject = {
                 label: "Price of ".concat(selectedAssetNames[i]),
                 data: listOfAssetPrices[i],
@@ -609,24 +615,25 @@ function changeTimeframe() {
                 pointRadius: 0,
                 borderWidth: 1,
                 backgroundColor: "#FFFFFF",
-                borderColor: "#FFFFFF"
+                borderColor: "#FFFFFF",
+                yAxisID: yAxisvalue
               };
               assetPricesData.push(newDataObject);
             }
             displayedChart.data.datasets = assetPricesData;
             displayedChart.update();
-            _context2.next = 76;
+            _context2.next = 77;
             break;
-          case 72:
-            _context2.prev = 72;
+          case 73:
+            _context2.prev = 73;
             _context2.t2 = _context2["catch"](0);
             console.log('cannot get new timeframe data from coingecko...');
             console.log(_context2.t2);
-          case 76:
+          case 77:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[0, 72], [13, 28, 31, 34], [39, 60, 63, 66]]);
+      }, _callee2, null, [[0, 73], [13, 28, 31, 34], [40, 61, 64, 67]]);
     }));
     return _fetchNewTimeframe.apply(this, arguments);
   }
@@ -668,17 +675,9 @@ var displayedChart = new Chart(ctx, {
     datasets: assetPricesData
   },
   options: {
-    scales: {
-      y: {
-        ticks: {
-          callback: function callback(value, index, ticks) {
-            return '$' + value;
-          }
-        },
-        display: true,
-        type: chartScale //logarithmic or linear
-      }
-    }
+    type: chartScale,
+    display: true,
+    position: 'left'
   }
 });
 
