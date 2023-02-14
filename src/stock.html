@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Data Testing</title>
+</head>
+
+<style>
+    body {
+        background-color: black;
+    }
+    h1, p {
+        color: white;
+        width: 100%;
+        text-align: center;
+        padding-top: 5%;
+    }
+</style>
+
+<body>
+
+
+<div>
+    <h1>Data For Stocks</h1>
+    <p></p>
+</div>
+
+<script>
+    const myAPIkey = 'GH9DTBAMAJL2HKD1';
+    let timeframeData = [];
+    let priceData = [];
+
+
+    async function fetchData() {
+        try {
+
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
+                    'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
+                }
+            };
+
+            let ticker = 'AAPL';
+            let timeframe = 'TIME_SERIES_WEEKLY'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY
+            let timeSeries = 'Weekly Time Series';
+            let URL = `https://www.alphavantage.co/query?function=${timeframe}&symbol=${ticker}&apikey=${myAPIkey}`;
+
+            let response = await fetch(URL);
+            let data = await response.json();
+
+            // to fetch timeframe
+            let timeSeriesData = data[`${timeSeries}`];
+            for (const time in timeSeriesData) {
+                timeframeData.push(time);
+            }
+
+            // to fetch price data
+            let priceSeriesData = data[`${timeSeries}`];
+            let allPriceDataObject = Object.values(priceSeriesData);
+            for (let i = 0; i < allPriceDataObject.length; i++) {
+                let allPrices = allPriceDataObject[`${i}`];
+                let closePrices = Object.values(allPrices);
+                let closePrice = closePrices[3];
+                priceData.push(closePrice);
+            };
+
+            console.log(timeframeData);
+            console.log(priceData);
+
+        } catch(error) {
+            console.log(error);
+            console.log('could not fetch data');
+        };
+    };
+    fetchData();
+</script>
+    
+</body>
+</html>
