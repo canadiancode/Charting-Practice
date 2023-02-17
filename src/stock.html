@@ -64,7 +64,7 @@
             for (let i = 0; i < allPriceDataObject.length; i++) {
                 let allPrices = allPriceDataObject[`${i}`];
                 let closePrices = Object.values(allPrices);
-                let closePrice = closePrices[3];
+                let closePrice = Number(closePrices[3]);
                 priceData.push(closePrice);
             };
 
