@@ -28,55 +28,26 @@
 </div>
 
 <script>
-    const myAPIkey = 'GH9DTBAMAJL2HKD1';
-    let timeframeData = [];
-    let priceData = [];
 
+// testing for the fetched data
+let testingTicker = 'MOGO';
 
-    async function fetchData() {
-        try {
-
-            const options = {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
-                    'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
-                }
-            };
-
-            let ticker = 'AAPL';
-            let timeframe = 'TIME_SERIES_WEEKLY'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY
-            let timeSeries = 'Weekly Time Series';
-            let URL = `https://www.alphavantage.co/query?function=${timeframe}&symbol=${ticker}&apikey=${myAPIkey}`;
-
-            let response = await fetch(URL);
-            let data = await response.json();
-
-            // to fetch timeframe
-            let timeSeriesData = data[`${timeSeries}`];
-            for (const time in timeSeriesData) {
-                timeframeData.push(time);
-            }
-
-            // to fetch price data
-            let priceSeriesData = data[`${timeSeries}`];
-            let allPriceDataObject = Object.values(priceSeriesData);
-            for (let i = 0; i < allPriceDataObject.length; i++) {
-                let allPrices = allPriceDataObject[`${i}`];
-                let closePrices = Object.values(allPrices);
-                let closePrice = Number(closePrices[3]);
-                priceData.push(closePrice);
-            };
-
-            console.log(timeframeData);
-            console.log(priceData);
-
-        } catch(error) {
-            console.log(error);
-            console.log('could not fetch data');
-        };
-    };
-    fetchData();
+async function fetchStockData() {
+  const myAPIkey = 'GH9DTBAMAJL2HKD1';
+  const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
+        'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
+    }
+};
+  let URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${testingTicker}&apikey=${myAPIkey}`;
+  let response = await fetch(URL);
+  let data = await response.json();
+  console.log(data);
+}
+fetchStockData();
+    
 </script>
     
 </body>
