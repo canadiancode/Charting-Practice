@@ -28,25 +28,53 @@
 
 <script>
 
-// testing for the fetched data
-let testingTicker = 'MOGO';
+    // array loops:
+const cars = [
+    {
+        model: 'honda',
+        gas: 87,
+        color: 'red'
+    },
+    {
+        model: 'toyota',
+        gas: 89,
+        color: 'blue'
+    },
+    {
+        model: 'ford',
+        gas: 91,
+        color: 'black'
+    }
+];
 
-async function fetchStockData() {
-  const myAPIkey = 'GH9DTBAMAJL2HKD1';
-  const options = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
-        'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
+    // Object loops
+const people = {
+    Joe: {
+        name: 'Joe',
+        age: 40,
+        career: 'Tech'
+    },
+    Nancy: {
+        name: 'Nancy',
+        age: '25',
+        career: 'banking'
+    },
+    Rick: {
+        name: 'Rick',
+        age: '34',
+        career: 'real estate'
     }
 };
-  let URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${testingTicker}&apikey=${myAPIkey}`;
-  let URLTwo = 'https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=365&interval=daily';
-  let response = await fetch(URLTwo);
-  let data = await response.json();
-  console.log(data);
-}
-fetchStockData();
+
+
+
+for (let person in people) {
+    if (people.hasOwnProperty(person)) {
+        console.log(people[person].name);
+    }
+};
+
+
     
 </script>
     
